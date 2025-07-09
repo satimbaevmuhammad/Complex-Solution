@@ -1,3 +1,5 @@
+// server.js yoki app.js
+
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
@@ -18,9 +20,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const employeeRoutes = require('./routes/employeeRoutes');
 app.use('/api/employees', employeeRoutes);
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server ${PORT}-portda ishg tushdi`));
 const projectRoutes = require('./routes/projectRoutes');
 app.use('/api/projects', projectRoutes);
 
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🚀 Server ${PORT}-portda ishga tushdi`));

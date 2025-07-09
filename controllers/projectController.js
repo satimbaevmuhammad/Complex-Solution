@@ -1,3 +1,5 @@
+// controllers/projectController.js
+
 const Project = require('../models/Project');
 
 // Create project
@@ -49,4 +51,9 @@ const updateProject = async (req, res) => {
   }
 };
 
-module.exports = { createProject, getProjects, deleteProject, updateProject };
+module.exports = {
+  createProject,
+  getProjects,
+  deleteProject,
+  updateProject
+};
