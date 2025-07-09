@@ -26,3 +26,7 @@ app.use('/api/projects', projectRoutes);
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server ${PORT}-portda ishga tushdi`));
+
+const adminRoutes = require('./routes/adminRoutes');
+app.use('/api/admins', adminRoutes);
+
