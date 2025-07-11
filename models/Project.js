@@ -1,3 +1,5 @@
+// models/Project.js
+
 const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema({
@@ -22,7 +24,7 @@ const projectSchema = new mongoose.Schema({
     uz: { type: String, required: true },
     ru: { type: String, required: true }
   },
-  link: { type: String, required: true }
+  link: { type: String, required: true },
 }, {
   timestamps: true,
 });
