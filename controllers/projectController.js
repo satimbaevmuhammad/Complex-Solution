@@ -1,3 +1,15 @@
+const Project = require('../models/Project');
+
+const createProject = async (req, res) => {
+  try {
+    const project = new Project(req.body);
+    await project.save();
+    res.status(201).json(project);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 const getProjects = async (req, res) => {
   try {
     const lang = req.query.lang || 'en';
@@ -19,4 +31,33 @@ const getProjects = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+};
+
+const deleteProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedProject = await Project.findByIdAndDelete(id);
+    if (!deletedProject) return res.status(404).json({ error: 'Project not found' });
+    res.json({ message: 'Project deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const updateProject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedProject = await Project.findByIdAndUpdate(id, req.body, { new: true });
+    if (!updatedProject) return res.status(404).json({ error: 'Project not found' });
+    res.json(updatedProject);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  createProject,
+  getProjects,
+  deleteProject,
+  updateProject
 };

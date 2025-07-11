@@ -1,13 +1,12 @@
-// routes/projectRoutes.js
-
 const express = require('express');
 const router = express.Router();
+
 const {
   createProject,
   getProjects,
   deleteProject,
   updateProject
-} = require('../controllers/projectController');
+} = require('../controllers/projectController');  // path to your controller
 
 // CREATE
 router.post('/', createProject);
