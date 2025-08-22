@@ -30,3 +30,5 @@ app.listen(PORT, () => console.log(`🚀 Server ${PORT}-portda ishga tushdi`));
 const adminRoutes = require('./routes/adminRoutes');
 app.use('/api/admins', adminRoutes);
 
+const contactRoutes = require('./routes/contactRoutes');
+app.use('/api/contacts', contactRoutes);
