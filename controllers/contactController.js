@@ -69,3 +69,21 @@ exports.updateStatus = async (req, res) => {
     res.status(500).json({ message: 'Server xatosi' });
   }
 };
+
+// DELETE /api/contacts/:id
+exports.deleteContact = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleted = await Contact.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return res.status(404).json({ message: 'Murojaat topilmadi' });
+    }
+
+    res.json({ message: 'Murojaat o‘chirildi', data: deleted });
+  } catch (err) {
+    console.error('deleteContact error:', err);
+    res.status(500).json({ message: 'Server xatosi' });
+  }
+};
