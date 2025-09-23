@@ -2,7 +2,17 @@ const Project = require('../models/Project');
 
 const createProject = async (req, res) => {
   try {
-    const project = new Project(req.body);
+    const { name, about, advantages, newFeature, link } = req.body;
+
+    const project = new Project({
+      img: req.file ? `/uploads/projects/${req.file.filename}` : null,
+      name: JSON.parse(name),
+      about: JSON.parse(about),
+      advantages: JSON.parse(advantages),
+      newFeature: JSON.parse(newFeature),
+      link
+    });
+
     await project.save();
     res.status(201).json(project);
   } catch (error) {

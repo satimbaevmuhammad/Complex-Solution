@@ -1,4 +1,6 @@
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
 const router = express.Router();
 
 const {
@@ -6,18 +8,30 @@ const {
   getProjects,
   deleteProject,
   updateProject
-} = require('../controllers/projectController');  // path to your controller
+} = require('../controllers/projectController');
 
-// CREATE
-router.post('/', createProject);
+// Upload config
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/projects'); // uploads/projects papkaga saqlanadi
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage });
+
+// CREATE (rasm bilan)
+router.post('/', upload.single('img'), createProject);
 
 // READ ALL
 router.get('/', getProjects);
 
-// DELETE by ID
+// DELETE
 router.delete('/:id', deleteProject);
 
-// UPDATE by ID
-router.put('/:id', updateProject);
+// UPDATE
+router.put('/:id', upload.single('img'), updateProject);
 
 module.exports = router;
