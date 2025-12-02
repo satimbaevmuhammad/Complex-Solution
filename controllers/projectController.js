@@ -48,6 +48,7 @@ const deleteProject = async (req, res) => {
     const { id } = req.params;
     const deletedProject = await Project.findByIdAndDelete(id);
     if (!deletedProject) return res.status(404).json({ error: 'Project not found' });
+
     res.json({ message: 'Project deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -57,13 +58,31 @@ const deleteProject = async (req, res) => {
 const updateProject = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedProject = await Project.findByIdAndUpdate(id, req.body, { new: true });
-    if (!updatedProject) return res.status(404).json({ error: 'Project not found' });
+
+    const data = {
+      link: req.body.link,
+      name: req.body.name ? JSON.parse(req.body.name) : undefined,
+      about: req.body.about ? JSON.parse(req.body.about) : undefined,
+      advantages: req.body.advantages ? JSON.parse(req.body.advantages) : undefined,
+      newFeature: req.body.newFeature ? JSON.parse(req.body.newFeature) : undefined,
+    };
+
+    // Agar rasm kelgan bo'lsa yangisini qo'yamiz
+    if (req.file) {
+      data.img = `/uploads/projects/${req.file.filename}`;
+    }
+
+    const updatedProject = await Project.findByIdAndUpdate(id, data, { new: true });
+
+    if (!updatedProject)
+      return res.status(404).json({ error: 'Project not found' });
+
     res.json(updatedProject);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 module.exports = {
   createProject,
